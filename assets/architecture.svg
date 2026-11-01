@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="720" viewBox="0 0 1400 720" role="img" aria-labelledby="title desc">
+  <title id="title">MSPM0 H-problem vehicle control architecture</title>
+  <desc id="desc">High-level project design showing K230 vision, line sensors and AXIS6 feeding an MSPM0G3507 controller, which drives the chassis and stepper rod and connects to OLED and Bluetooth diagnostics.</desc>
+  <defs>
+    <linearGradient id="canvas" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5f8fc"/>
+      <stop offset="1" stop-color="#edf3fa"/>
+    </linearGradient>
+    <linearGradient id="core" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#13345d"/>
+      <stop offset="1" stop-color="#1f5b91"/>
+    </linearGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#1a3653" flood-opacity="0.09"/>
+    </filter>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#4778a8"/>
+    </marker>
+    <marker id="arrowTeal" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#3f9b9b"/>
+    </marker>
+    <style>
+      text { font-family: Inter, "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+      .eyebrow { font-size: 14px; font-weight: 700; letter-spacing: 2.2px; fill: #53708f; }
+      .coreEyebrow { font-size: 14px; font-weight: 700; letter-spacing: 2.2px; fill: #a9c9e8; }
+      .heading { font-size: 30px; font-weight: 750; fill: #173451; }
+      .subhead { font-size: 15px; fill: #687f98; }
+      .cardTitle { font-size: 18px; font-weight: 700; fill: #173451; }
+      .cardSub { font-size: 13px; fill: #71849a; }
+      .coreTitle { font-size: 25px; font-weight: 750; fill: #ffffff; }
+      .coreSub { font-size: 14px; fill: #d3e4f5; }
+      .coreItem { font-size: 14px; font-weight: 600; fill: #f5f9ff; }
+      .linkLabel { font-size: 12px; font-weight: 650; fill: #567491; }
+      .pill { font-size: 13px; font-weight: 650; fill: #3e607e; }
+      .foot { font-size: 12px; fill: #8394a7; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="720" rx="28" fill="url(#canvas)"/>
+  <text x="70" y="62" class="eyebrow">2026 · NATIONAL UNDERGRADUATE ELECTRONIC DESIGN CONTEST · H PROBLEM</text>
+  <text x="70" y="108" class="heading">车载平衡滚球系统 · 控制架构</text>
+  <text x="70" y="136" class="subhead">高层设计图｜系统职责与模块关系；阶段实测范围见验证记录</text>
+
+  <!-- input cards -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="176" width="285" height="112" rx="18" fill="#ffffff"/>
+    <rect x="70" y="318" width="285" height="112" rx="18" fill="#ffffff"/>
+    <rect x="70" y="460" width="285" height="112" rx="18" fill="#ffffff"/>
+  </g>
+  <circle cx="108" cy="216" r="17" fill="#e8f2fb"/>
+  <path d="M100 216h16M108 208v16M103 211l10 10M113 211l-10 10" stroke="#3674a7" stroke-width="2" stroke-linecap="round"/>
+  <text x="138" y="215" class="cardTitle">K230 视觉模块</text>
+  <text x="96" y="252" class="cardSub">摄像头处理 · 钢球位置观测</text>
+
+  <circle cx="108" cy="358" r="17" fill="#e8f2fb"/>
+  <path d="M97 358h22M100 351v14M107 351v14M114 351v14" stroke="#3674a7" stroke-width="2" stroke-linecap="round"/>
+  <text x="138" y="357" class="cardTitle">八路数字红外</text>
+  <text x="96" y="394" class="cardSub">赛道边缘与终点横线检测</text>
+
+  <circle cx="108" cy="500" r="17" fill="#e8f2fb"/>
+  <path d="M108 489v8M108 503v9M97 500h8M111 500h9M100 492l6 6M110 502l6 6M116 492l-6 6M106 502l-6 6" stroke="#3674a7" stroke-width="2" stroke-linecap="round"/>
+  <text x="138" y="499" class="cardTitle">AXIS6 惯性模块</text>
+  <text x="96" y="536" class="cardSub">姿态与运动观测 · 辅助控制输入</text>
+
+  <!-- controller -->
+  <g filter="url(#shadow)">
+    <rect x="480" y="192" width="390" height="340" rx="24" fill="url(#core)"/>
+  </g>
+  <text x="520" y="244" class="coreEyebrow">MAIN CONTROLLER</text>
+  <text x="520" y="286" class="coreTitle">MSPM0G3507</text>
+  <text x="520" y="313" class="coreSub">主控 · 控制状态机 · 安全出口</text>
+  <line x1="520" y1="338" x2="830" y2="338" stroke="#ffffff" stroke-opacity="0.2"/>
+  <circle cx="530" cy="374" r="4" fill="#68c1c3"/>
+  <text x="546" y="379" class="coreItem">循迹与终点判定</text>
+  <circle cx="530" cy="414" r="4" fill="#68c1c3"/>
+  <text x="546" y="419" class="coreItem">滚球反馈与步进执行</text>
+  <circle cx="530" cy="454" r="4" fill="#68c1c3"/>
+  <text x="546" y="459" class="coreItem">串口解析与状态回传</text>
+  <circle cx="530" cy="494" r="4" fill="#68c1c3"/>
+  <text x="546" y="499" class="coreItem">急停、超时与故障处理</text>
+
+  <!-- outputs -->
+  <g filter="url(#shadow)">
+    <rect x="1040" y="142" width="290" height="92" rx="17" fill="#ffffff"/>
+    <rect x="1040" y="258" width="290" height="92" rx="17" fill="#ffffff"/>
+    <rect x="1040" y="374" width="290" height="92" rx="17" fill="#ffffff"/>
+    <rect x="1040" y="490" width="290" height="92" rx="17" fill="#ffffff"/>
+  </g>
+  <circle cx="1077" cy="179" r="15" fill="#e9f5f4"/>
+  <path d="M1068 179h18M1072 174v10M1082 174v10" stroke="#3c9292" stroke-width="2" stroke-linecap="round"/>
+  <text x="1105" y="178" class="cardTitle">TB6612 · 底盘电机</text>
+  <text x="1065" y="207" class="cardSub">差速驱动 · 主动制动</text>
+
+  <circle cx="1077" cy="295" r="15" fill="#e9f5f4"/>
+  <path d="M1077 284v22M1071 289l6-5 6 5M1071 301l6 5 6-5" stroke="#3c9292" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="1105" y="294" class="cardTitle">步进驱动 · 摆杆</text>
+  <text x="1065" y="323" class="cardSub">调平与钢球位置控制</text>
+
+  <circle cx="1077" cy="411" r="15" fill="#e9f5f4"/>
+  <rect x="1069" y="403" width="16" height="14" rx="2" fill="none" stroke="#3c9292" stroke-width="2"/>
+  <path d="M1072 413h10M1074 406h6" stroke="#3c9292" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="1105" y="410" class="cardTitle">SSD1306 OLED</text>
+  <text x="1065" y="439" class="cardSub">异步状态显示</text>
+
+  <circle cx="1077" cy="527" r="15" fill="#e9f5f4"/>
+  <path d="M1069 526c0-5 4-8 8-8s8 3 8 8-4 8-8 8-8-3-8-8ZM1065 527h-4M1093 527h4" fill="none" stroke="#3c9292" stroke-width="2" stroke-linecap="round"/>
+  <text x="1105" y="526" class="cardTitle">蓝牙调试终端</text>
+  <text x="1065" y="555" class="cardSub">参数命令 · 状态与日志</text>
+
+  <!-- connections -->
+  <path d="M355 232 C405 232 425 248 480 248" fill="none" stroke="#4778a8" stroke-width="3" marker-end="url(#arrowBlue)"/>
+  <path d="M355 374 C410 374 425 374 480 374" fill="none" stroke="#4778a8" stroke-width="3" marker-end="url(#arrowBlue)"/>
+  <path d="M355 516 C405 516 425 476 480 476" fill="none" stroke="#4778a8" stroke-width="3" marker-end="url(#arrowBlue)"/>
+  <text x="388" y="218" class="linkLabel">UART</text>
+  <text x="388" y="360" class="linkLabel">GPIO</text>
+  <text x="388" y="527" class="linkLabel">UART</text>
+
+  <path d="M870 238 C925 238 965 188 1040 188" fill="none" stroke="#3f9b9b" stroke-width="3" marker-end="url(#arrowTeal)"/>
+  <path d="M870 300 C930 300 972 304 1040 304" fill="none" stroke="#3f9b9b" stroke-width="3" marker-end="url(#arrowTeal)"/>
+  <path d="M870 410 C930 410 972 420 1040 420" fill="none" stroke="#3f9b9b" stroke-width="3" marker-end="url(#arrowTeal)"/>
+  <path d="M1040 536 C975 536 930 486 870 486" fill="none" stroke="#3f9b9b" stroke-width="3" marker-end="url(#arrowTeal)"/>
+  <text x="930" y="213" class="linkLabel">PWM</text>
+  <text x="930" y="285" class="linkLabel">STEP / DIR</text>
+  <text x="930" y="398" class="linkLabel">I²C</text>
+  <text x="927" y="554" class="linkLabel">UART</text>
+
+  <rect x="70" y="625" width="1260" height="1" fill="#d7e1eb"/>
+  <rect x="70" y="650" width="214" height="38" rx="19" fill="#e6f0fa"/>
+  <text x="177" y="674" class="pill" text-anchor="middle">周期控制分层</text>
+  <rect x="300" y="650" width="240" height="38" rx="19" fill="#e7f4f2"/>
+  <text x="420" y="674" class="pill" text-anchor="middle">高频脉冲独立服务</text>
+  <rect x="556" y="650" width="235" height="38" rx="19" fill="#e6f0fa"/>
+  <text x="673" y="674" class="pill" text-anchor="middle">串口环形缓冲</text>
+  <rect x="807" y="650" width="235" height="38" rx="19" fill="#e7f4f2"/>
+  <text x="924" y="674" class="pill" text-anchor="middle">异常安全降级</text>
+  <text x="1330" y="674" class="foot" text-anchor="end">Portfolio architecture · not a complete firmware release</text>
+</svg>
